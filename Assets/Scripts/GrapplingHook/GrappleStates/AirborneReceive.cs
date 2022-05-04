@@ -22,17 +22,30 @@ public class AirborneReceive : State
             hook.LookAt(ShootHookSystem.correctHookPos);
             if (ShootHookSystem.Collided)
             {
-                ShootHookSystem.Collided = false;
-                ShootHookSystem.SetState(new Grapple(ShootHookSystem));
+                GrappleTarget();
                 yield break;
             }
-            hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
-            t = (Time.time - startTime) / hookDuration;
+            UpdatePosition();
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        BackToIdle();
+    }
+
+    void UpdatePosition()
+    {
+        hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
+        t = (Time.time - startTime) / hookDuration;
+    }
+
+    void GrappleTarget()
+    {
+        ShootHookSystem.Collided = false;
+        ShootHookSystem.SetState(new Grapple(ShootHookSystem));
+    }
+
+    void BackToIdle()
+    {
         ShootHookSystem.SetHook(false);
-        
-        // Go back to idle
         ShootHookSystem.SetState(new Idle(ShootHookSystem));
     }
 }

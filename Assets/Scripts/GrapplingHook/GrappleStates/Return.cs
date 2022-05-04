@@ -10,16 +10,18 @@ public class Return : State
     {
         Rigidbody hook = ShootHookSystem.hook;
 
-        // Vector3 breakForce = -hook.velocity * 2f;
-        // hook.AddForce(breakForce * Time.deltaTime, ForceMode.Impulse);
-        ShootHookSystem.hook.velocity = Vector3.zero;
-        ShootHookSystem.hook.angularVelocity = Vector3.zero;
-
+        EndMotionAndSpin();
         Vector3 direction = ShootHookSystem.correctHookPos.position - hook.transform.position;
         hook.AddForce(direction.normalized * ShootHookSystem.hookSpeed, ForceMode.Impulse);
         ShootHookSystem.SetState(new AirborneReceive(ShootHookSystem));
 
         yield break;
+    }
+
+    void EndMotionAndSpin()
+    {
+        ShootHookSystem.hook.velocity = Vector3.zero;
+        ShootHookSystem.hook.angularVelocity = Vector3.zero;
     }
 
     public override IEnumerator Returning()

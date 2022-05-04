@@ -10,22 +10,13 @@ public class Shoot : State
     
     public Shoot(ShootHookSystem shootHookSystem) : base(shootHookSystem) {}
 
-    public override IEnumerator Shooting()
+    public override IEnumerator Start()
     {
-        RaycastHit hit;
         Vector3 targetPoint;
 
         ShootHookSystem.rope.SetActive(true);
 
-        // Check if the shot hit or missed
-        if (!ShootHookSystem.CheckShotHit(out hit))
-        {
-            // Still show the hook being fired, but then bring it back
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            targetPoint = ray.GetPoint(ShootHookSystem.hookRange);
-        }
-        else
-            targetPoint = hit.point;
+        targetPoint = GetTargetPoint();
 
         // Make the hook move towards the point
         Vector3 direction = targetPoint - ShootHookSystem.hook.position;
@@ -36,6 +27,22 @@ public class Shoot : State
         ShootHookSystem.hook.AddForce(direction.normalized * ShootHookSystem.hookSpeed, ForceMode.Impulse);
 
         ShootHookSystem.SetState(new AirborneSend(ShootHookSystem));
+        yield break;
+    }
+
+    Vector3 GetTargetPoint()
+    {
+        RaycastHit hit;
+
+        // Check if the shot hit or missed
+        if (ShootHookSystem.CheckShotHit(out hit)) return hit.point;
+        // Still show the hook being fired, but then bring it back
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        return ray.GetPoint(ShootHookSystem.hookRange);
+    }
+
+    public override IEnumerator Shooting()
+    {
         yield break;
     }
 }

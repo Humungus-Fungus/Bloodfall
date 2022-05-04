@@ -11,20 +11,25 @@ public class Grapple : State
     public override IEnumerator Start()
     {
         Vector3 grapplePosition = ShootHookSystem.hook.transform.position;
+        Transform hook = ShootHookSystem.hook.transform;
 
-        ShootHookSystem.hook.velocity = Vector3.zero;
-        ShootHookSystem.hook.angularVelocity = Vector3.zero;
-        ShootHookSystem.hook.drag = 100;
-
+        RemoveAllForces();
         yield return new WaitForSeconds(Time.deltaTime); // wait for a single frame
-        ShootHookSystem.hook.transform.position = grapplePosition;
-
+        hook.position = grapplePosition;
         yield break;
     }
 
+    void RemoveAllForces()
+    {
+        ShootHookSystem.hook.velocity = Vector3.zero;
+        ShootHookSystem.hook.angularVelocity = Vector3.zero;
+        ShootHookSystem.hook.drag = 100;
+    }
+    
     public override IEnumerator Grappled()
     {
         // Whatever happens when the hook is stucc
         yield break;
     }
+
 }

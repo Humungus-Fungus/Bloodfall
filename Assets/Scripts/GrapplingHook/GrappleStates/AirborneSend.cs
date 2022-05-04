@@ -11,21 +11,25 @@ public class AirborneSend : State
 
     public override IEnumerator Start()
     {
-        for (float distance = 0f; distance < ShootHookSystem.hookRange;
-         distance = Vector3.Distance(ShootHookSystem.hook.transform.position, ShootHookSystem.Transform.position))
+        Transform hook = ShootHookSystem.hook.transform;
+        Transform startPoint = ShootHookSystem.correctHookPos;
+        float range = ShootHookSystem.hookRange;
+
+        for (float distance = 0f; distance < range; distance = Vector3.Distance(hook.position, startPoint.position))
         {
-            if (!ShootHookSystem.Collided)
-            {
-                yield return new WaitForSeconds(Time.deltaTime);
-                continue;
-            }
-            // if it collided, then it does this:
-            ShootHookSystem.Collided = false; // set it back to false
-            ShootHookSystem.SetState(new Grapple(ShootHookSystem));
+            yield return new WaitForSeconds(Time.deltaTime);
+            if (!ShootHookSystem.Collided) continue;
+            GrappleTarget();
             yield break;
         }
 
         ShootHookSystem.SetState(new Return(ShootHookSystem));
         yield break;
+    }
+
+    void GrappleTarget()
+    {
+        ShootHookSystem.Collided = false; // set it back to false
+        ShootHookSystem.SetState(new Grapple(ShootHookSystem));
     }
 }

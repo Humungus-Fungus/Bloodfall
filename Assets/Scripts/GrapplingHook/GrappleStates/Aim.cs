@@ -14,21 +14,10 @@ public class Aim : State
     public override IEnumerator Start()
     {
         if (ShootHookSystem.Follow) // Shoot the hook
-            shootHook();
+            ShootHookSystem.SetState(new Shoot(ShootHookSystem));
         else
-            returnHook();
+            ShootHookSystem.SetState(new Return(ShootHookSystem)); // else bring the hook back
         
         yield break;
-    }
-
-    void shootHook()
-    {
-        ShootHookSystem.SetState(new Shoot(ShootHookSystem));
-        ShootHookSystem.OnShoot();
-    }
-
-    void returnHook()
-    {
-            ShootHookSystem.SetState(new Return(ShootHookSystem)); // else bring the hook back
     }
 }

@@ -14,14 +14,19 @@ public class Idle : State
 
         ShootHookSystem.rope.SetActive(false);
 
+        EndMotionAndSpin();
+        
+        ShootHookSystem.Follow = true;
+        yield break;
+    }
+
+    void EndMotionAndSpin()
+    {
         hook.velocity = Vector3.zero;
         hook.transform.localPosition = Vector3.zero;
 
         hook.angularVelocity = Vector3.zero;
         hook.rotation = Quaternion.identity;
-        
-        ShootHookSystem.Follow = true;
-        yield break;
     }
 
     public override IEnumerator Ready()

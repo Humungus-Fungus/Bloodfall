@@ -83,21 +83,4 @@ public class ShootHookSystem : StateMachine
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         return (Physics.Raycast(ray, out outputHit, hookRange, unhookable));
     }
-
-    public void OnShoot()
-    {
-        StartCoroutine(State.Shooting());
-    }
-
-    public void OnGrab()
-    {
-
-        StartCoroutine(State.Grappled());
-    }
-
-    public void OnReturn()
-    {
-
-        StartCoroutine(State.Returning());
-    }
 }
