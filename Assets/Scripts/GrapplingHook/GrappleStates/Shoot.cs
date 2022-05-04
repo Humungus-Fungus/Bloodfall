@@ -31,6 +31,8 @@ public class Shoot : State
         Vector3 direction = targetPoint - ShootHookSystem.hook.position;
 
         ShootHookSystem.Follow = false;
+        // to prevent the hook getting stuck, we'll make it jump forwards initially
+        ShootHookSystem.hook.transform.position += direction.normalized * 1f;
         ShootHookSystem.hook.AddForce(direction.normalized * ShootHookSystem.hookSpeed, ForceMode.Impulse);
 
         ShootHookSystem.SetState(new AirborneSend(ShootHookSystem));

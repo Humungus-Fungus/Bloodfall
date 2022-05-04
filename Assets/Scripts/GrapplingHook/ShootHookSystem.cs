@@ -13,6 +13,7 @@ public class ShootHookSystem : StateMachine
     public Transform cam;
     public Rigidbody hook;
 
+    public bool _returnedHook = false;
 
     public Transform correctHookPos;
     
@@ -44,7 +45,7 @@ public class ShootHookSystem : StateMachine
     private void Awake()
     {
         _transform = transform;
-        unhookable = 1 >> 8;
+        unhookable = 1 << 8 | 1 << 3;
     }
     #endregion
 
@@ -58,6 +59,16 @@ public class ShootHookSystem : StateMachine
     void Update()
     {
         CheckButtonPress();
+    }
+
+    public void SetHook(bool value)
+    {
+        _returnedHook = value;
+    }
+
+    public bool GetHook()
+    {
+        return _returnedHook;
     }
 
     public void CheckButtonPress()

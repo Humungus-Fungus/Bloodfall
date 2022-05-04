@@ -573,6 +573,65 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &899157455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 899157456}
+  - component: {fileID: 899157457}
+  - component: {fileID: 899157458}
+  m_Layer: 0
+  m_Name: InteractionSphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &899157456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899157455}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1492322659}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &899157457
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899157455}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &899157458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899157455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8847bea8534288547b211deac93c2379, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootHookSystem: {fileID: 1492322661}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +995,7 @@ Transform:
   - {fileID: 1006705246}
   - {fileID: 963194228}
   - {fileID: 1580953005}
+  - {fileID: 899157456}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -977,6 +1037,7 @@ MonoBehaviour:
   hookWeight: 5
   cam: {fileID: 963194228}
   hook: {fileID: 2058046457}
+  _returnedHook: 0
   correctHookPos: {fileID: 517607952}
   hookHand: {fileID: 997525841}
   unhookable:
@@ -1341,7 +1402,7 @@ GameObject:
   - component: {fileID: 2058046457}
   - component: {fileID: 2058046458}
   - component: {fileID: 2058046459}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: DollarStoreHook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1468,7 +1529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1492322659}
-  radius: 2
+  radius: 1.5
   offset: {x: 0, y: 1, z: 0}
   shootHookSystem: {fileID: 1492322661}
   fixedd: 0

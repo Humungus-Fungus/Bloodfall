@@ -10,7 +10,6 @@ public class Grapple : State
 
     public override IEnumerator Start()
     {
-        Debug.Log("Grappled!");
         Vector3 grapplePosition = ShootHookSystem.hook.transform.position;
 
         ShootHookSystem.hook.velocity = Vector3.zero;
@@ -18,8 +17,6 @@ public class Grapple : State
         ShootHookSystem.hook.drag = 100;
 
         yield return new WaitForSeconds(Time.deltaTime); // wait for a single frame
-
-        Debug.Log("Take this, b****");
         ShootHookSystem.hook.transform.position = grapplePosition;
 
         yield break;

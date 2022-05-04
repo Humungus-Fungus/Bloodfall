@@ -17,15 +17,20 @@ public class AirborneReceive : State
 
         ShootHookSystem.hook.drag = 0;
 
-        for (float distance = 2f; distance > 1;
-         distance = Vector3.Distance(hook.position, ShootHookSystem.correctHookPos.position))
+        while (!ShootHookSystem.GetHook())
         {
             hook.LookAt(ShootHookSystem.correctHookPos);
-            // hook.position = Vector3.MoveTowards(hook.position, ShootHookSystem.correctHookPos.position, 70/distance * Time.deltaTime);
+            if (ShootHookSystem.Collided)
+            {
+                ShootHookSystem.Collided = false;
+                ShootHookSystem.SetState(new Grapple(ShootHookSystem));
+                yield break;
+            }
             hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
             t = (Time.time - startTime) / hookDuration;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        ShootHookSystem.SetHook(false);
         
         // Go back to idle
         ShootHookSystem.SetState(new Idle(ShootHookSystem));
