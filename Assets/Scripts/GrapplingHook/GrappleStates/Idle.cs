@@ -8,9 +8,11 @@ public class Idle : State
 {
     public Idle(ShootHookSystem shootHookSystem) : base(shootHookSystem) {}
 
+    Rigidbody hook;
+
     public override IEnumerator Start()
     {
-        Rigidbody hook = ShootHookSystem.hook;
+        hook = ShootHookSystem.hook;
 
         ShootHookSystem.rope.SetActive(false);
 

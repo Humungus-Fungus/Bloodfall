@@ -9,6 +9,8 @@ public class ShootHookSystem : StateMachine
 {
     #region Fields and Properties
 
+    public SwingerActions swingerActions;
+
     public float hookRange = 10f, hookSpeed = 1f, hookWeight = 5f;
     public Transform cam;
     public Rigidbody hook;
@@ -36,6 +38,8 @@ public class ShootHookSystem : StateMachine
 
     public GameObject rope;
 
+    public float lastGrappleTime = 0f;
+
     Transform _transform;
     public Transform Transform => _transform;
     
@@ -45,6 +49,7 @@ public class ShootHookSystem : StateMachine
     private void Awake()
     {
         _transform = transform;
+        swingerActions.ShootHook += AimTarget;
         unhookable = 1 << 8 | 1 << 3;
     }
     #endregion
@@ -54,11 +59,6 @@ public class ShootHookSystem : StateMachine
     private void Start()
     {
         SetState(new Idle(this));
-    }
-
-    void Update()
-    {
-        CheckButtonPress();
     }
 
     public void SetHook(bool value)
@@ -71,9 +71,8 @@ public class ShootHookSystem : StateMachine
         return _returnedHook;
     }
 
-    public void CheckButtonPress()
+    public void AimTarget()
     {
-        if (!Input.GetButtonDown("Fire2")) return;
         SetState(new Aim(this));
     }
 

@@ -265,6 +265,50 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &517771015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517771017}
+  - component: {fileID: 517771016}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &517771016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517771015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2e46f3a977cc0e4a914011c836cdd4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &517771017
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517771015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &653243156
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,13 +510,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729387616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07881394, y: 1.8126717, z: -4.2491984}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8611861, y: -1.9073284, z: -4.3591986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 997525841}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &729387619
 LineRenderer:
@@ -740,6 +784,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 997525841}
+  - component: {fileID: 997525842}
   m_Layer: 0
   m_Name: HookSystem
   m_TagString: Untagged
@@ -760,9 +805,22 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2058046456}
+  - {fileID: 729387618}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &997525842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997525840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50a0cac1151799429854e9d1a83d0d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006705241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab74e1d5aebb30c46948f50eb65cb1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swingerActions: {fileID: 997525842}
   hookRange: 15
   hookSpeed: 30
   hookWeight: 5
@@ -1044,6 +1103,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 264
   rope: {fileID: 729387616}
+  lastGrappleTime: 0
 --- !u!1 &1563970919
 GameObject:
   m_ObjectHideFlags: 0

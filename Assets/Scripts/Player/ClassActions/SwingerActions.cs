@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class SwingerActions : MonoBehaviour
 {
-    public void reelHook()
+    private void Awake()
+    {
+        InputSystem.Instance.Ability += CallShootHook;
+    }
+
+    public void ReelHook()
     {
         // player tugs on the hook, pulling the hook to them/them to the hook
 
     }
 
-    public void shootHook()
+    void CallShootHook()
     {
-        // player throws the hook!
+        ShootHook.Invoke();
+        // Debug.Log("Shot the hook out");
     }
+
+    public delegate void ShootHookCallback();
+    public ShootHookCallback ShootHook;
 }

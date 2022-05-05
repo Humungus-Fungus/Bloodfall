@@ -6,11 +6,12 @@ public class AirborneReceive : State
 {
     public AirborneReceive (ShootHookSystem shootHookSystem) : base(shootHookSystem) {}
 
+    Transform hook;
+
     public override IEnumerator Start()
     {
         // goes 15 away
-        Transform hook = ShootHookSystem.hook.transform;
-
+        hook = ShootHookSystem.hook.transform;
         float t = 0; 
         float hookDuration = ShootHookSystem.hookRange / ShootHookSystem.hookSpeed;
         float startTime = Time.time;
@@ -25,13 +26,13 @@ public class AirborneReceive : State
                 GrappleTarget();
                 yield break;
             }
-            UpdatePosition();
+            UpdatePosition(startTime, hookDuration, ref t);
             yield return new WaitForSeconds(Time.deltaTime);
         }
         BackToIdle();
     }
 
-    void UpdatePosition()
+    void UpdatePosition(float startTime, float hookDuration, ref float t)
     {
         hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
         t = (Time.time - startTime) / hookDuration;
@@ -40,6 +41,9 @@ public class AirborneReceive : State
     void GrappleTarget()
     {
         ShootHookSystem.Collided = false;
+        float timeDiff = Time.deltaTime - ShootHookSystem.lastGrappleTime;
+        if (timeDiff < 0.1f) return;
+        ShootHookSystem.lastGrappleTime = Time.time;
         ShootHookSystem.SetState(new Grapple(ShootHookSystem));
     }
 
