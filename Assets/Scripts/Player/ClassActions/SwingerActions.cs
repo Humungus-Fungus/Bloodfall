@@ -9,7 +9,7 @@ public class SwingerActions : MonoBehaviour
         InputSystem.Instance.Ability += CallShootHook;
     }
 
-    public void ReelHook()
+    public void GoToHook()
     {
         // player tugs on the hook, pulling the hook to them/them to the hook
 
