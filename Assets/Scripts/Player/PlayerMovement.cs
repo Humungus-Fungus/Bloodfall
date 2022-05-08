@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 12f;
-    public float jumpHeight = 10f;
+    public float jumpHeight = 10f, gravity = -9.81f, groundDistance = 0.4f;
+    
+    float _speed = 12f;
+    public float Speed
+    {
+        get => _speed;
+        set { _speed = value; }
+    }
+
     public CharacterController _cc;
-    public float gravity = -9.81f;
-
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
 
     Transform _transform;
     Vector3 velocity;
@@ -34,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
 
         OnDirectionalMovement();
-        Jump();
+        JumpCheck();
 
         velocity.y += gravity * Time.deltaTime;
         _cc.Move(velocity * Time.deltaTime);
@@ -50,10 +53,10 @@ public class PlayerMovement : MonoBehaviour
         if (x == 0 && z == 0) return;
 
         Vector3 motion = _transform.right * x + _transform.forward * z;
-        _cc.Move( motion * speed * Time.deltaTime );
+        _cc.Move( motion * _speed * Time.deltaTime );
     }
 
-    void Jump()
+    void JumpCheck()
     {
         if (Input.GetAxis("Jump") == 0 || !isGrounded) return;
         velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);

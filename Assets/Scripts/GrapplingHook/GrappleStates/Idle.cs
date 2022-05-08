@@ -13,6 +13,7 @@ public class Idle : State
     public override IEnumerator Start()
     {
         hook = ShootHookSystem.hook;
+        ShootHookSystem.unshootable = false;
 
         ShootHookSystem.rope.SetActive(false);
 
@@ -29,6 +30,7 @@ public class Idle : State
 
         hook.angularVelocity = Vector3.zero;
         hook.rotation = Quaternion.identity;
+        hook.transform.LookAt(ShootHookSystem.Transform.forward * 100);
     }
 
     public override IEnumerator Ready()

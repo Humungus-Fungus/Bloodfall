@@ -1069,12 +1069,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb6eccbaf6f24b48b47691b3e34dbf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
   jumpHeight: 4
-  _cc: {fileID: 1492322658}
   gravity: -40
-  groundCheck: {fileID: 1580953005}
   groundDistance: 0.4
+  _cc: {fileID: 1492322658}
+  groundCheck: {fileID: 1580953005}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1090,15 +1089,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab74e1d5aebb30c46948f50eb65cb1d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingerActions: {fileID: 997525842}
+  _swingerActions: {fileID: 997525842}
+  _pm: {fileID: 1492322660}
   hookRange: 15
-  hookSpeed: 30
+  hookSpeed: 60
   hookWeight: 5
   cam: {fileID: 963194228}
   hook: {fileID: 2058046457}
-  _returnedHook: 0
+  unshootable: 0
   correctHookPos: {fileID: 517607952}
-  hookHand: {fileID: 997525841}
   unhookable:
     serializedVersion: 2
     m_Bits: 264

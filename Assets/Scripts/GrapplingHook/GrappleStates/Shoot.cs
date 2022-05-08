@@ -17,6 +17,7 @@ public class Shoot : State
         ShootHookSystem.rope.SetActive(true);
 
         targetPoint = GetTargetPoint();
+        ShootHookSystem.hook.transform.LookAt(targetPoint);
 
         // Make the hook move towards the point
         Vector3 direction = targetPoint - ShootHookSystem.hook.position;

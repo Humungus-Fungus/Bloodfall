@@ -5,11 +5,12 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     public ShootHookSystem shootHookSystem;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer != 7 || shootHookSystem.Follow) return;
         Debug.Log("Hook entered");
-        shootHookSystem.SetHook(true);
+        shootHookSystem.hookEnteredPickupRadius.Invoke();
+        // shootHookSystem.ReturnedHook = true;
     }
 }

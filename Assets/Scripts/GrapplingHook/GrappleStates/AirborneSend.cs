@@ -23,6 +23,8 @@ public class AirborneSend : State
             yield break;
         }
 
+        // this doesn't account for calling back the hook early
+
         ShootHookSystem.SetState(new Return(ShootHookSystem));
         yield break;
     }

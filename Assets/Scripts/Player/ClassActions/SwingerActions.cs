@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class SwingerActions : MonoBehaviour
 {
+    public delegate void ShootHookCallback();
+    public ShootHookCallback ShootHook;
+    void CallShootHook() => ShootHook.Invoke();
+    
     private void Awake()
     {
         InputSystem.Instance.Ability += CallShootHook;
+        InputSystem.Instance.AltAbility += GoToHook;
     }
 
     public void GoToHook()
@@ -15,12 +20,4 @@ public class SwingerActions : MonoBehaviour
 
     }
 
-    void CallShootHook()
-    {
-        ShootHook.Invoke();
-        // Debug.Log("Shot the hook out");
-    }
-
-    public delegate void ShootHookCallback();
-    public ShootHookCallback ShootHook;
 }

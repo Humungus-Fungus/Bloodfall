@@ -9,13 +9,17 @@ public class ShootHookSystem : StateMachine
 {
     #region Fields and Properties
 
-    public SwingerActions swingerActions;
+    public SwingerActions _swingerActions;
+    public PlayerMovement _pm;
 
     public float hookRange = 10f, hookSpeed = 1f, hookWeight = 5f;
     public Transform cam;
     public Rigidbody hook;
 
-    public bool _returnedHook = false;
+    public bool unshootable = false;
+
+    public delegate void hookEnteredPickupRadiusCallback();
+    public hookEnteredPickupRadiusCallback hookEnteredPickupRadius;
 
     public Transform correctHookPos;
     
@@ -33,7 +37,7 @@ public class ShootHookSystem : StateMachine
         set { _collided = value; }
     }
 
-    public Transform hookHand;
+    // public Transform hookHand;
     public LayerMask unhookable;
 
     public GameObject rope;
@@ -49,30 +53,19 @@ public class ShootHookSystem : StateMachine
     private void Awake()
     {
         _transform = transform;
-        swingerActions.ShootHook += AimTarget;
+        _swingerActions.ShootHook += AimTarget;
         unhookable = 1 << 8 | 1 << 3;
     }
     #endregion
 
-
-    // you can tell that it's from the start of the game, because of this "Start" line under me-
     private void Start()
     {
         SetState(new Idle(this));
     }
 
-    public void SetHook(bool value)
-    {
-        _returnedHook = value;
-    }
-
-    public bool GetHook()
-    {
-        return _returnedHook;
-    }
-
     public void AimTarget()
     {
+        if (unshootable) return;
         SetState(new Aim(this));
     }
 
@@ -81,5 +74,14 @@ public class ShootHookSystem : StateMachine
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         return (Physics.Raycast(ray, out outputHit, hookRange, unhookable));
+    }
+
+    // When grappled, if the player's distance from the hook is locked to hookRange
+    // Impose limits on the player's movement, but only in directions away from the hook
+    void ClampPlayerToHookRange()
+    {
+        float distance = Vector3.Distance(_transform.position, hook.transform.position);
+        if (distance < hookRange) return;
+        // prevent player from moving away from hook, but still towards it
     }
 }

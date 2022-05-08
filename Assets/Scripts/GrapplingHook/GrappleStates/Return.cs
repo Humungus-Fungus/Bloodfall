@@ -11,8 +11,8 @@ public class Return : State
         Rigidbody hook = ShootHookSystem.hook;
 
         EndMotionAndSpin();
-        Vector3 direction = ShootHookSystem.correctHookPos.position - hook.transform.position;
-        hook.AddForce(direction.normalized * ShootHookSystem.hookSpeed, ForceMode.Impulse);
+        // Vector3 direction = ShootHookSystem.correctHookPos.position - hook.transform.position;
+        // hook.AddForce(direction.normalized * ShootHookSystem.hookSpeed, ForceMode.Impulse);
         ShootHookSystem.SetState(new AirborneReceive(ShootHookSystem));
 
         yield break;
