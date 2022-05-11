@@ -14,9 +14,17 @@ public class AirborneSend : State
     public override IEnumerator Start()
     {
         ShootHookSystem.Collided = GrappleTarget;
-        
-        yield return new WaitForSeconds(ShootHookSystem.hookShootTime);
-        if (_grappled) yield break;
+        _grappled = false;
+        Transform hook = ShootHookSystem.hook.transform, player = ShootHookSystem.player;
+        float range = ShootHookSystem.hookRange;
+
+        while (Vector3.Distance(hook.position, player.position) < range)
+        {
+            if (ShootHookSystem.reset) break;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        if (_grappled || ShootHookSystem.reset) yield break;
+
         ReturnToPlayer();
     }
 
@@ -28,6 +36,7 @@ public class AirborneSend : State
 
     void ReturnToPlayer()
     {
+        if (ShootHookSystem.Unshootable) return;
         ShootHookSystem.SetState(new Return(ShootHookSystem));
     }
 }

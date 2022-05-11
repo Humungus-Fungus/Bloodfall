@@ -13,6 +13,7 @@ public class Aim : State
 
     public override IEnumerator Start()
     {
+        ShootHookSystem.reset = false;
         if (ShootHookSystem.Follow) // Shoot the hook
             ShootHookSystem.SetState(new Shoot(ShootHookSystem));
         else

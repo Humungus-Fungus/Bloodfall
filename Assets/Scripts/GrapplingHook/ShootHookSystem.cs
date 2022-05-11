@@ -22,7 +22,9 @@ public class ShootHookSystem : StateMachine
     public Transform cam;
     public Rigidbody hook;
 
-    public bool reachedPlayer = false;
+    // public bool reachedPlayer = false;
+
+    public bool reset;
 
     [System.NonSerialized]
     public Vector3 lastGrapplePoint = Vector3.zero;

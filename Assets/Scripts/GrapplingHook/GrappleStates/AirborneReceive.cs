@@ -8,12 +8,13 @@ public class AirborneReceive : State
     public AirborneReceive (ShootHookSystem shootHookSystem) : base(shootHookSystem) {}
 
     Transform hook;
+    bool reachedPlayer;
 
     public override IEnumerator Start()
     {
         // goes 15 away
-        ShootHookSystem.reachedPlayer = false;
-        Debug.Log("reachedPlayer made false");
+        reachedPlayer = false;
+        // Debug.Log("reachedPlayer made false");
         hook = ShootHookSystem.hook.transform;
         ShootHookSystem.hookEnteredPickupRadius = BackToIdle;
         ShootHookSystem.Collided = GrappleTarget;
@@ -23,34 +24,40 @@ public class AirborneReceive : State
         float startTime = Time.time;
         float startDist = Vector3.Distance(hook.position, ShootHookSystem.player.position);
 
-        while (!ShootHookSystem.reachedPlayer)
+        // while (!ShootHookSystem.reachedPlayer)
+        while (!reachedPlayer && !ShootHookSystem.reset)
         {
-            UpdatePosition(startTime, hookDuration, ref t);
+            reachedPlayer = UpdatePosition(startTime, hookDuration, ref t);
             yield return new WaitForSeconds(Time.deltaTime);
             // Debug.Log("I'm bugging out");
         }
-        
+        Debug.Log("AR state ended");
         yield break;
     }
 
-    void UpdatePosition(float startTime, float hookDuration, ref float t)
+    bool UpdatePosition(float startTime, float hookDuration, ref float t)
     {
         hook.LookAt(ShootHookSystem.correctHookPos);
         hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
-        t = (Time.time - startTime) / hookDuration;
+        t = Mathf.Clamp((Time.time - startTime) / hookDuration, 0, 1);
+        
+        // if (Vector3.Distance(hook.position, ShootHookSystem.correctHookPos.position)<=0.8)
+        // {
+        //     BackToIdle();
+        // }
+        return (Vector3.Distance(hook.position, ShootHookSystem.correctHookPos.position)<=0.8);
     }
 
     void GrappleTarget()
     {
-        ShootHookSystem.reachedPlayer = true;
         ShootHookSystem.SetState(new Grapple(ShootHookSystem));
-        Debug.Log("reachedPlayer made true");
+        // Debug.Log("reachedPlayer made true");
     }
 
     void BackToIdle()
     {
-        ShootHookSystem.reachedPlayer = true;
+        reachedPlayer = true;
         ShootHookSystem.SetState(new Idle(ShootHookSystem));
-        Debug.Log("reachedPlayer made true");
+        // Debug.Log("reachedPlayer made true");
     }
 }

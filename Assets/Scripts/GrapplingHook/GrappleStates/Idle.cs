@@ -38,6 +38,8 @@ public class Idle : State
     {
         ShootHookSystem.Unshootable = false;
         ShootHookSystem.lastGrapplePoint = Vector3.zero;
+        // ShootHookSystem.reachedPlayer = true;
+        ShootHookSystem.reset = true;
     }
 
     public override IEnumerator Ready()

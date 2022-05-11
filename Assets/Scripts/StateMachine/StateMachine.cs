@@ -9,7 +9,7 @@ public abstract class StateMachine : MonoBehaviour
     public void SetState(State state)
     {
         State = state;
-        // Debug.Log(State);
+        Debug.Log(State);
         StartCoroutine(State.Start());
     }
 
