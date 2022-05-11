@@ -27,7 +27,7 @@ public class Idle : State
     void EndMotionAndSpin()
     {
         hook.velocity = Vector3.zero;
-        hook.transform.localPosition = Vector3.zero;
+        hook.transform.position = ShootHookSystem.correctHookPos.position;
 
         hook.angularVelocity = Vector3.zero;
         hook.rotation = Quaternion.identity;

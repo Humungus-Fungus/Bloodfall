@@ -898,7 +898,7 @@ MonoBehaviour:
   hookShootTime: 0.75
   cam: {fileID: 963194228}
   hook: {fileID: 2058046457}
-  reachedPlayer: 0
+  reset: 0
   correctHookPos: {fileID: 517607952}
   unhookable:
     serializedVersion: 2
@@ -1866,7 +1866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1492322659}
-  radius: 1.5
+  radius: 2
   offset: {x: 0, y: 1, z: 0}
   shootHookSystem: {fileID: 997525843}
   fixedd: 0
