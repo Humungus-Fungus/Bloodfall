@@ -7,19 +7,32 @@ using UnityEngine;
 
 public class ShootHookSystem : StateMachine
 {
+    public delegate void hookEnteredPickupRadiusCallback();
+    public hookEnteredPickupRadiusCallback hookEnteredPickupRadius;
+
+    public delegate void CollidedCallback();
+    public CollidedCallback Collided;
+
     #region Fields and Properties
 
     public SwingerActions _swingerActions;
     public PlayerMovement _pm;
 
-    public float hookRange = 10f, hookSpeed = 1f, hookWeight = 5f;
+    public float hookRange = 10f, hookSpeed = 1f, hookWeight = 5f, hookShootTime = 0.75f;
     public Transform cam;
     public Rigidbody hook;
 
-    public bool unshootable = false;
+    public bool reachedPlayer = false;
 
-    public delegate void hookEnteredPickupRadiusCallback();
-    public hookEnteredPickupRadiusCallback hookEnteredPickupRadius;
+    [System.NonSerialized]
+    public Vector3 lastGrapplePoint = Vector3.zero;
+
+    bool _unshootable = false;
+    public bool Unshootable
+    {
+        get => _unshootable;
+        set { _unshootable = value; }
+    }
 
     public Transform correctHookPos;
     
@@ -29,23 +42,17 @@ public class ShootHookSystem : StateMachine
         get => _follow;
         set { _follow = value; }
     }
-    
-    private bool _collided;
-    public bool Collided
-    {
-        get => _collided;
-        set { _collided = value; }
-    }
 
     // public Transform hookHand;
     public LayerMask unhookable;
 
     public GameObject rope;
 
-    public float lastGrappleTime = 0f;
+    // public float lastGrappleTime = 0f;
 
     Transform _transform;
-    public Transform Transform => _transform;
+
+    public Transform player;
     
     #endregion
 
@@ -65,7 +72,7 @@ public class ShootHookSystem : StateMachine
 
     public void AimTarget()
     {
-        if (unshootable) return;
+        if (_unshootable) return;
         SetState(new Aim(this));
     }
 

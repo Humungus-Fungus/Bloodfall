@@ -9,6 +9,8 @@ public class Return : State
     public override IEnumerator Start()
     {
         Rigidbody hook = ShootHookSystem.hook;
+        hook.isKinematic = false;
+        ShootHookSystem.Unshootable = true;
 
         EndMotionAndSpin();
         // Vector3 direction = ShootHookSystem.correctHookPos.position - hook.transform.position;

@@ -13,9 +13,11 @@ public class Grapple : State
         Vector3 grapplePosition = ShootHookSystem.hook.transform.position;
         Transform hook = ShootHookSystem.hook.transform;
 
-        RemoveAllForces();
-        yield return new WaitForSeconds(Time.deltaTime); // wait for a single frame
         hook.position = grapplePosition;
+        ShootHookSystem.lastGrapplePoint = grapplePosition;
+        ShootHookSystem.hook.isKinematic = true;
+        // RemoveAllForces();
+        yield return new WaitForSeconds(Time.deltaTime); // wait for a single frame
         yield break;
     }
 

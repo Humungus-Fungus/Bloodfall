@@ -13,7 +13,8 @@ public class Idle : State
     public override IEnumerator Start()
     {
         hook = ShootHookSystem.hook;
-        ShootHookSystem.unshootable = false;
+
+        ResetListeners();
 
         ShootHookSystem.rope.SetActive(false);
 
@@ -30,7 +31,13 @@ public class Idle : State
 
         hook.angularVelocity = Vector3.zero;
         hook.rotation = Quaternion.identity;
-        hook.transform.LookAt(ShootHookSystem.Transform.forward * 100);
+        hook.transform.LookAt(ShootHookSystem.player.forward * 100);
+    }
+
+    void ResetListeners()
+    {
+        ShootHookSystem.Unshootable = false;
+        ShootHookSystem.lastGrapplePoint = Vector3.zero;
     }
 
     public override IEnumerator Ready()

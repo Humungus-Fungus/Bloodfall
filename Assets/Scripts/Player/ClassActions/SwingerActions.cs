@@ -10,14 +10,21 @@ public class SwingerActions : MonoBehaviour
     
     private void Awake()
     {
-        InputSystem.Instance.Ability += CallShootHook;
-        InputSystem.Instance.AltAbility += GoToHook;
+        InputSystem InputAction = InputSystem.Instance;
+        InputAction.RegularAttack += SwingerAttack;
+        InputAction.Ability += CallShootHook;
+        InputAction.AltAbility += GoToHook;
     }
 
     public void GoToHook()
     {
         // player tugs on the hook, pulling the hook to them/them to the hook
 
+    }
+
+    void SwingerAttack()
+    {
+        Debug.Log("Huah!");
     }
 
 }

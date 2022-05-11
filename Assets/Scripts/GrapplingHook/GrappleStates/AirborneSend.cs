@@ -9,29 +9,25 @@ public class AirborneSend : State
 {
     public AirborneSend (ShootHookSystem shootHookSystem) : base(shootHookSystem) {}
 
+    bool _grappled = false;
+
     public override IEnumerator Start()
     {
-        Transform hook = ShootHookSystem.hook.transform;
-        Transform startPoint = ShootHookSystem.correctHookPos;
-        float range = ShootHookSystem.hookRange;
-
-        for (float distance = 0f; distance < range; distance = Vector3.Distance(hook.position, startPoint.position))
-        {
-            yield return new WaitForSeconds(Time.deltaTime);
-            if (!ShootHookSystem.Collided) continue;
-            GrappleTarget();
-            yield break;
-        }
-
-        // this doesn't account for calling back the hook early
-
-        ShootHookSystem.SetState(new Return(ShootHookSystem));
-        yield break;
+        ShootHookSystem.Collided = GrappleTarget;
+        
+        yield return new WaitForSeconds(ShootHookSystem.hookShootTime);
+        if (_grappled) yield break;
+        ReturnToPlayer();
     }
 
     void GrappleTarget()
     {
-        ShootHookSystem.Collided = false; // set it back to false
+        _grappled = true;
         ShootHookSystem.SetState(new Grapple(ShootHookSystem));
+    }
+
+    void ReturnToPlayer()
+    {
+        ShootHookSystem.SetState(new Return(ShootHookSystem));
     }
 }

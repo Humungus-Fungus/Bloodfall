@@ -12,12 +12,25 @@ public class CollisionDetector : MonoBehaviour
         if (shootHookSystem.Follow) return;
 
         int collisionLayerMask = 1 << other.gameObject.layer;
+
+        float range = shootHookSystem.hookRange;
+        Vector3 prevGrapplePoint = shootHookSystem.lastGrapplePoint;
+        Vector3 hookPos = shootHookSystem.hook.transform.position;
+        float distanceFromLastGrapple = (prevGrapplePoint == Vector3.zero) ?
+         2*range : Vector3.Distance(prevGrapplePoint, hookPos);
+        
+        if (distanceFromLastGrapple < range/3) return;
         if ( (shootHookSystem.unhookable.value & collisionLayerMask) != 0)
         {
             shootHookSystem.SetState(new Return(shootHookSystem));
-            return;
+            // Debug.Log("Returning the hook because it already hooked");
         }
-        shootHookSystem.Collided = true;
+        else
+        {
+            shootHookSystem.Collided.Invoke();
+            // Debug.Log("Collision Detected - Opinion rejected");
+            // Debug.Log(distanceFromLastGrapple);
+        }
         Debug.Log(other.transform.name);
     }
 }
