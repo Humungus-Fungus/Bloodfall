@@ -16,7 +16,7 @@ public class Idle : State
 
         ResetListeners();
 
-        ShootHookSystem.rope.SetActive(false);
+        // ShootHookSystem.rope.SetActive(false);
 
         EndMotionAndSpin();
         

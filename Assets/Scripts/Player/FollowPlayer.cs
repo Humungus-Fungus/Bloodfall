@@ -19,8 +19,7 @@ public class FollowPlayer : MonoBehaviour
         _transform = transform;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (!shootHookSystem.Follow && !fixedd) return;
         _transform.position = player.position + (player.right * radius) + offset;

@@ -14,9 +14,10 @@ public class Shoot : State
     {
         Vector3 targetPoint;
 
-        ShootHookSystem.rope.SetActive(true);
+        // ShootHookSystem.rope.SetActive(true);
 
         targetPoint = GetTargetPoint();
+        ShootHookSystem.grapplePoint = targetPoint;
         ShootHookSystem.hook.transform.LookAt(targetPoint);
 
         // Make the hook move towards the point

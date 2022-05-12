@@ -24,10 +24,14 @@ public class ShootHookSystem : StateMachine
 
     // public bool reachedPlayer = false;
 
+    [System.NonSerialized]
     public bool reset;
 
     [System.NonSerialized]
     public Vector3 lastGrapplePoint = Vector3.zero;
+
+    [System.NonSerialized]
+    public Vector3 grapplePoint;
 
     bool _unshootable = false;
     public bool Unshootable
@@ -48,7 +52,7 @@ public class ShootHookSystem : StateMachine
     // public Transform hookHand;
     public LayerMask unhookable;
 
-    public GameObject rope;
+    // public GameObject rope;
 
     // public float lastGrappleTime = 0f;
 

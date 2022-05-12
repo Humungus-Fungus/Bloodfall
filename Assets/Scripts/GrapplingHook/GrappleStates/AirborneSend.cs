@@ -18,11 +18,11 @@ public class AirborneSend : State
         Transform hook = ShootHookSystem.hook.transform, player = ShootHookSystem.player;
         float range = ShootHookSystem.hookRange;
 
-        while (Vector3.Distance(hook.position, player.position) < range)
+        while (Vector3.Distance(hook.position, player.position) < range && !ShootHookSystem.reset)
         {
-            if (ShootHookSystem.reset) break;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        
         if (_grappled || ShootHookSystem.reset) yield break;
 
         ReturnToPlayer();

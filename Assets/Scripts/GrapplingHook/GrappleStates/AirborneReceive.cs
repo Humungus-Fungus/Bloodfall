@@ -9,6 +9,7 @@ public class AirborneReceive : State
 
     Transform hook;
     bool reachedPlayer;
+    float countingSpeed = 0.5f;
 
     public override IEnumerator Start()
     {
@@ -29,9 +30,7 @@ public class AirborneReceive : State
         {
             reachedPlayer = UpdatePosition(startTime, hookDuration, ref t);
             yield return new WaitForSeconds(Time.deltaTime);
-            // Debug.Log("I'm bugging out");
         }
-        Debug.Log("AR state ended");
         yield break;
     }
 
@@ -39,13 +38,10 @@ public class AirborneReceive : State
     {
         hook.LookAt(ShootHookSystem.correctHookPos);
         hook.position = Vector3.Lerp(hook.position, ShootHookSystem.correctHookPos.position, t);
-        t = Mathf.Clamp((Time.time - startTime) / hookDuration, 0, 1);
-        
-        // if (Vector3.Distance(hook.position, ShootHookSystem.correctHookPos.position)<=0.8)
-        // {
-        //     BackToIdle();
-        // }
-        return (Vector3.Distance(hook.position, ShootHookSystem.correctHookPos.position)<=0.8);
+
+        t = Mathf.Clamp(t + Time.deltaTime * countingSpeed, 0, 1);
+
+        return (t>=0.95);
     }
 
     void GrappleTarget()
