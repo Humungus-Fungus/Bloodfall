@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GrapplingRope : MonoBehaviour
 {
     Spring _spring;
+    Vector3 randomAngle;
     public LineRenderer _lineRenderer;
     public Vector3 currentGrapplePosition;
     public ShootHookSystem hookSystem;
@@ -34,6 +36,7 @@ public class GrapplingRope : MonoBehaviour
         if (_lineRenderer.positionCount > 0) _lineRenderer.positionCount = 0;
         cancelOffset = 1;
         prevDist = 0;
+        randomAngle = Vector3.Slerp(Vector3.up, Vector3.down, Random.value);
     }
 
 
@@ -66,7 +69,7 @@ public class GrapplingRope : MonoBehaviour
         var hookSource = hookSystem.correctHookPos.position;
 
         var viewVector = (grapplePoint - hookSource).normalized;
-        var up = Quaternion.LookRotation(viewVector) * Vector3.up;
+        var up = Quaternion.LookRotation(viewVector) * randomAngle;
 
         currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 12f);
 
@@ -76,8 +79,6 @@ public class GrapplingRope : MonoBehaviour
 
             var offset = up * waveHeight * Mathf.Sin(delta * waveCount * Mathf.PI) * _spring.Value *
                 affectCurve.Evaluate(delta);
-            
-            Debug.Log(cancelOffset); // extreme negative values found in offset. What's the cause? _spring.Value
 
             _lineRenderer.SetPosition(i, Vector3.Lerp(hookSource, hookSystem.hook.transform.position, delta) + offset * cancelOffset);
         }
